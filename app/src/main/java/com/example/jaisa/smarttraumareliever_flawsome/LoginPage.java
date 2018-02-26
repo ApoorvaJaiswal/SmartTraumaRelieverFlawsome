@@ -1,6 +1,7 @@
 package com.example.jaisa.smarttraumareliever_flawsome;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -188,6 +189,7 @@ public class LoginPage extends AppCompatActivity {
                     UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(usernameText.getText().toString()).build();
                     mCurrentUser.updateProfile(userProfileChangeRequest);
                     Toast.makeText(LoginPage.this, "Verification Success", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LoginPage.this, MainActivity.class));
                 } else {
                     // Sign in failed, display a message and update the UI
                     if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {

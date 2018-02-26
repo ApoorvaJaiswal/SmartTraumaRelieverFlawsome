@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "814784262576-lv2471oudl23i8vdlo3hpuolbfe7ttsi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jaisa.smarttraumareliever_flawsome",
+            "certificate_hash": "a0bc224ab5d8ae64e58625a87da1e3bb38a79392"
+          }
+        },
+        {
           "client_id": "814784262576-e10qeabh09b4nn2ct8sjj0epr8u24luj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
