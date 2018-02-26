@@ -26,7 +26,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.concurrent.TimeUnit;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginPage extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login_page);
 
         progressDialog = new ProgressDialog(this);
         verifyPhoneButton = findViewById(R.id.verifyPhoneButton);
@@ -66,13 +66,13 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    //Toast.makeText(MainActivity.this, verifies[j].getText().toString()+ "\n"+ enteredVerificationCode.substring(0, j) + "\n" + verifies[j].getText() + "\n" + enteredVerificationCode.substring(j + 1, 6), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LoginPage.this, verifies[j].getText().toString()+ "\n"+ enteredVerificationCode.substring(0, j) + "\n" + verifies[j].getText() + "\n" + enteredVerificationCode.substring(j + 1, 6), Toast.LENGTH_SHORT).show();
                     if(!verifies[j].getText().toString().equals("")) {
                         enteredVerificationCode = enteredVerificationCode.substring(0, j) + verifies[j].getText() + enteredVerificationCode.substring(j + 1, 6);
                         if (j < 5) {
                             verifies[j + 1].requestFocus();
                         }
-                        //Toast.makeText(MainActivity.this, enteredVerificationCode, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(LoginPage.this, enteredVerificationCode, Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
-                Toast.makeText(MainActivity.this, "Verification Failed! Please try again later", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginPage.this, "Verification Failed! Please try again later", Toast.LENGTH_SHORT).show();
                 progressDialog.hide();
             }
 
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCodeAutoRetrievalTimeOut(String s) {
-                Toast.makeText(MainActivity.this, "Verification Pending...",Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginPage.this, "Verification Pending...",Toast.LENGTH_SHORT).show();
                 progressDialog.hide();
             }
         };
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog.setCancelable(false);
                 progressDialog.show();
                 if(!usernameText.getText().toString().equals("")) {
-                    PhoneAuthProvider.getInstance().verifyPhoneNumber(phoneNumber, 7, TimeUnit.SECONDS, MainActivity.this, mCallbacks);
+                    PhoneAuthProvider.getInstance().verifyPhoneNumber(phoneNumber, 7, TimeUnit.SECONDS, LoginPage.this, mCallbacks);
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                     }, 10000);
                 }
                 else {
-                    Toast.makeText(MainActivity.this, "Please enter your Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginPage.this, "Please enter your Name", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -139,32 +139,32 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 progressDialog.show();
                 if(!usernameText.getText().toString().equals("")) {
-                    //Toast.makeText(MainActivity.this, veriId+"", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LoginPage.this, veriId+"", Toast.LENGTH_SHORT).show();
                     PhoneAuthCredential credential = PhoneAuthProvider.getCredential(veriId, enteredVerificationCode);
                     signInWithPhoneAuthCredential(credential);
                 }
                 else {
-                    Toast.makeText(MainActivity.this, "Please enter your Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginPage.this, "Please enter your Name", Toast.LENGTH_SHORT).show();
                 }
             }
         });
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, mCurrentUser.getDisplayName() + "....." + mCurrentUser.getPhoneNumber()+"....\nSigning Out...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginPage.this, mCurrentUser.getDisplayName() + "....." + mCurrentUser.getPhoneNumber()+"....\nSigning Out...", Toast.LENGTH_SHORT).show();
                 mCurrentUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(MainActivity.this, "Account Deleted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginPage.this, "Account Deleted", Toast.LENGTH_SHORT).show();
                     }
                 });
                 mAuth.signOut();
-                Toast.makeText(MainActivity.this, "Sign Out Successful", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginPage.this, "Sign Out Successful", Toast.LENGTH_SHORT).show();
                 mCurrentUser = null;
             }
         });
 
-        //Toast.makeText(MainActivity.this,mCurrentUser.getDisplayName()+".."+mCurrentUser.getPhoneNumber(),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(LoginPage.this,mCurrentUser.getDisplayName()+".."+mCurrentUser.getPhoneNumber(),Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -187,12 +187,12 @@ public class MainActivity extends AppCompatActivity {
                     mCurrentUser = user;
                     UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(usernameText.getText().toString()).build();
                     mCurrentUser.updateProfile(userProfileChangeRequest);
-                    Toast.makeText(MainActivity.this, "Verification Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginPage.this, "Verification Success", Toast.LENGTH_SHORT).show();
                 } else {
                     // Sign in failed, display a message and update the UI
                     if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                         // The verification code entered was invalid
-                        Toast.makeText(MainActivity.this, "Verification Failed! Invalid Code Entered", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginPage.this, "Verification Failed! Invalid Code Entered", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
