@@ -1,11 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Button
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/reporting_status">
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/tick_mark"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Crime Reported Successfully"
+            android:textSize="17sp"
+            android:padding="6dp"
+            android:textColor="@color/colorBlack"
+            />
+    </LinearLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/reporting_status"
+        android:id="@+id/report_crime"
+        >
+        <ImageView
+             android:layout_width="match_parent"
+             android:layout_height="100dp"
+             android:src="@drawable/report_crime"
+             android:padding="10dp"
+             />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Next"
-        android:id="@+id/b"/>
-</LinearLayout>
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/report_crime"
+        android:id="@+id/crimes_reported"
+        >
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="120dp"
+            android:src="@drawable/crime_report"
+            android:padding="10dp"
+            />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@id/report_crime"
+        android:layout_toRightOf="@id/crimes_reported"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/report_crime"
+            android:padding="10dp"
+            android:src="@drawable/solved_crimes"
+            />
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>

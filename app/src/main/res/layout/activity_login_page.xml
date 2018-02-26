@@ -7,11 +7,12 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:background="#ffffff"
+    android:layout_margin="15dp"
     tools:context="com.example.jaisa.smarttraumareliever_flawsome.LoginPage">
 
     <ImageView
-        android:layout_width="180dp"
-        android:layout_height="190dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="15dp"
         android:layout_gravity="center"
         android:background="@drawable/smiley3"/>
@@ -21,15 +22,20 @@
         android:text="LOGIN / SIGNUP"
         android:textAlignment="center"
         android:textColor="#000000"
-        android:textSize="17dp"/>
-    <EditText
+        android:textSize="17dp"
+        />
+    <android.support.v7.widget.AppCompatEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:id="@+id/usernameText"
         android:backgroundTint="#4eb6b6"
         android:fontFamily="sans-serif-condensed"
-        android:hint="Full Name"/>
+        android:hint="Full Name"
+        android:maxLines="1"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,6 +45,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:inputType="phone"
             android:backgroundTint="#4eb6b6"
             android:hint="Phone No."
@@ -51,6 +59,8 @@
             android:textColor="#4eb6b6"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
             android:paddingTop="-7dp"
             android:paddingBottom="-7dp"
             android:textSize="10dp"
