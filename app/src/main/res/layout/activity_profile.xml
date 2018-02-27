@@ -142,22 +142,22 @@
             />
     </LinearLayout>
 
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/trackCrimeText"
+        android:textSize="15dp"
+        android:text="Track Crimes"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/solved_crime_layout"
+        />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/track1"
             android:id="@+id/trackImage"
-            android:layout_below="@+id/solved_crime_layout"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/trackCrimeText"
-            android:textSize="15dp"
-            android:text="Track Crimes"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/trackImage"
+            android:layout_below="@id/trackCrimeText"
             />
 
 </RelativeLayout>
