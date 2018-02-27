@@ -10,9 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     LinearLayout reportingStatus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setSubtitle(R.string.app_bytext);
 
         reportingStatus = (LinearLayout)findViewById(R.id.reporting_status);
-        //reportingStatus.setVisibility(View.INVISIBLE);
+        reportingStatus.setVisibility(View.GONE);
 
     }
 
@@ -40,5 +41,24 @@ public class MainActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent;
+        switch(view.getId()){
+            case R.id.report_crime:
+                intent = new Intent(MainActivity.this,ReportCrimeActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.crimes_reported:
+                intent = new Intent(MainActivity.this,DisplayCrimesActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.solved_crime:
+                intent = new Intent(MainActivity.this,DisplayCrimesActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }

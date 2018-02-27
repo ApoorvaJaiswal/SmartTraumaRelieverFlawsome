@@ -30,6 +30,7 @@
         android:layout_marginTop="5dp"
         android:layout_below="@id/reporting_status"
         android:id="@+id/report_crime"
+        android:onClick="onClick"
         >
         <ImageView
              android:layout_width="match_parent"
@@ -45,6 +46,7 @@
         android:layout_marginTop="5dp"
         android:layout_below="@id/report_crime"
         android:id="@+id/crimes_reported"
+        android:onClick="onClick"
         >
         <ImageView
             android:layout_width="150dp"
@@ -61,6 +63,8 @@
         android:layout_marginLeft="5dp"
         android:layout_below="@id/report_crime"
         android:layout_toRightOf="@id/crimes_reported"
+        android:id="@+id/solved_crime"
+        android:onClick="onClick"
         >
         <ImageView
             android:layout_width="match_parent"

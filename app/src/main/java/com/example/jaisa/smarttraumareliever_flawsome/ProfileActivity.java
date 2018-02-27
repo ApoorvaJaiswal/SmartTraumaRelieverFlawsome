@@ -13,6 +13,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        /*
         im1= findViewById(R.id.profileIcon);
         im2= findViewById(R.id.trackImage);
         t1= findViewById(R.id.name);
@@ -24,6 +25,7 @@ public class ProfileActivity extends AppCompatActivity {
         t7= findViewById(R.id.solvedCrimeNumber);
         t8= findViewById(R.id.solvedCrimeText);
         t9= findViewById(R.id.trackCrimeText);
+        */
 
     }
 }

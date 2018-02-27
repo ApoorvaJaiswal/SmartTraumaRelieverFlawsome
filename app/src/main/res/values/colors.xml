@@ -6,4 +6,5 @@
 
     <!-- Custom Colors -->
     <color name="colorBlack">#000000</color>
+    <color name="colorSilver">#c0c0c0</color>
 </resources>
