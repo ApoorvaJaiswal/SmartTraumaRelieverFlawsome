@@ -9,5 +9,7 @@ public class ReportCrimeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_crime);
+
+        getSupportActionBar().setTitle("Report Crime");
     }
 }
