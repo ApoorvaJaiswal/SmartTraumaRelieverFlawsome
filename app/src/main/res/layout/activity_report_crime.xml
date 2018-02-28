@@ -17,7 +17,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Enter your text here"
-            android:text="helo"
+            android:gravity="top"
+            android:cursorVisible="true"
             android:inputType="textLongMessage|textMultiLine"
             android:id="@+id/report_text"
             android:layout_weight="1"
@@ -32,6 +33,7 @@
             android:id="@+id/record_button"
             android:layout_width="64dp"
             android:layout_height="64dp"
+            android:layout_marginTop="250dp"
             android:background="@drawable/record"
             />
     </LinearLayout>
@@ -44,5 +46,6 @@
         android:background="@color/colorPrimaryDark"
         android:textStyle="bold"
         android:textColor="@color/colorWhite"
+        android:id="@+id/report_crime_button"
         />
 </RelativeLayout>
