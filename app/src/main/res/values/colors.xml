@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#4EB6B6</color>
-    <color name="colorPrimaryDark">#ACCECE</color>
+    <color name="colorPrimaryDark">#3b8b8b</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- Custom Colors -->
+    <color name="colorBlack">#000000</color>
+    <color name="colorSilver">#c0c0c0</color>
+    <color name="colorGrey">#e2e2e2</color>
+    <color name="colorWhite">#ffff</color>
+    <color name="colorDullOrange">#d2a317</color>
 </resources>
