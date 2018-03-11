@@ -23,12 +23,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".ReportCrimeActivity"/>
+        <activity android:name=".ReportCrimeActivity" />
         <activity
             android:name=".DisplayCrimesActivity"
             android:label="@string/title_activity_display_crimes"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".CrimeDetailsActivity"></activity>
+        <activity android:name=".CrimeDetailsActivity" />
+        <activity android:name=".SolvedCrimesActivity"></activity>
     </application>
 
 </manifest>
