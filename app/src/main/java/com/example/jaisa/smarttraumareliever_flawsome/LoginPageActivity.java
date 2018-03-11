@@ -93,6 +93,10 @@ public class LoginPageActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
+        if(mCurrentUser != null){
+            Intent intent = new Intent(LoginPageActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
