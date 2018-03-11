@@ -6,7 +6,9 @@ import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.media.MediaRecorder;
 import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -28,7 +30,12 @@ import com.microsoft.cognitiveservices.speechrecognition.RecognitionResult;
 import com.microsoft.cognitiveservices.speechrecognition.RecognitionStatus;
 import com.microsoft.cognitiveservices.speechrecognition.SpeechRecognitionMode;
 import com.microsoft.cognitiveservices.speechrecognition.SpeechRecognitionServiceFactory;
+
+import java.io.File;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 
@@ -38,6 +45,7 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
     EditText report;
     static boolean gotPermission = false, button_stop=false;
     String result="",displayText="";
+
 
     MicrophoneRecognitionClient micClient = null;
     int m_waitSeconds = 0;
@@ -61,6 +69,7 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
                 //starts recording
                 //first check if audio permission is granted or not
                 if(!button_stop) {
+
                     startRecording(v);
                     record.setBackgroundResource(R.drawable.stop);
                     button_stop = true;
@@ -74,6 +83,7 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
             }
         });
     }
+
     private void requestPermissionAudio()
     {
         if(Build.VERSION.SDK_INT >= 23) {
@@ -188,6 +198,7 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
         result = s;
         Log.e("Writing",s);
     }
+
 
     @Override
     public void onFinalResponseReceived(RecognitionResult response) {
