@@ -3,9 +3,11 @@ package com.example.jaisa.smarttraumareliever_flawsome;
 import android.*;
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -28,7 +30,15 @@ import com.microsoft.cognitiveservices.speechrecognition.RecognitionResult;
 import com.microsoft.cognitiveservices.speechrecognition.RecognitionStatus;
 import com.microsoft.cognitiveservices.speechrecognition.SpeechRecognitionMode;
 import com.microsoft.cognitiveservices.speechrecognition.SpeechRecognitionServiceFactory;
+
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.concurrent.TimeUnit;
 
 
@@ -70,6 +80,16 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
                     stopRecording(v);
                     record.setBackgroundResource(R.drawable.record);
                     button_stop = false;
+                }
+            }
+        });
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String valueText = report.getText().toString();
+                if(!valueText.equals("")) {
+                    AsyncFetch asyncFetch = new AsyncFetch();
+                    asyncFetch.execute(new String[]{valueText});
                 }
             }
         });
@@ -220,5 +240,73 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
     public void onAudioEvent(boolean b) {
 
         Toast.makeText(this,"listening",Toast.LENGTH_SHORT).show();
+    }
+
+    private class AsyncFetch extends AsyncTask {
+
+        ProgressDialog pdLoading = new ProgressDialog(ReportCrimeActivity.this);
+        private char ch;
+        private String res;
+
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            pdLoading.setMessage("\tLoading...");
+            pdLoading.setCancelable(false);
+            pdLoading.show();
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            //Toast.makeText(getActivity(), tabNum+"", Toast.LENGTH_SHORT).show();
+            String value = (String)params[0];
+            //aa="hiiiiHello";
+
+            try{
+                String link = "http://websiteyo.pythonanywhere.com/";
+                String data="";
+                try {
+                    data = URLEncoder.encode("ind", "UTF-8")+"="+URLEncoder.encode(value,"UTF-8")+"&"+URLEncoder.encode("work", "UTF-8")+"="+URLEncoder.encode("retrieve","UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                //String data = "status=registered";
+
+                URL url = new URL(link);
+                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                conn.setRequestMethod("POST");
+
+                conn.setDoOutput(true);
+                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+                wr.write(data);
+                wr.flush();
+
+                BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String sb = "";
+                String line = null;
+                // Read Server Response
+
+                int c = 1;
+                //String name="", address="", phone="", comments="";
+                while((line = rd.readLine()) != null) {
+                    //sb.append(line);
+                    sb = sb+line;
+                    //break;
+                }
+                //aa=sb+"    "+sb.length();
+                res=sb;
+                return sb;
+
+            } catch(Exception e){
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Object result){
+            pdLoading.hide();
+            Toast.makeText(ReportCrimeActivity.this, ""+res, Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
