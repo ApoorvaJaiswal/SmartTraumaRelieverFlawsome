@@ -47,11 +47,12 @@
         />
 
     <Button
-        android:layout_width="290sp"
+        android:layout_width="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:text="SEARCH VIOLATIONS"
         android:layout_marginLeft="5dp"
+        android:layout_marginRight="15dp"
         android:layout_gravity="bottom"
         android:background="@color/colorPrimary"
         android:layout_marginTop="10sp"
@@ -59,7 +60,8 @@
         android:layout_toRightOf="@+id/record_button"
         android:textStyle="bold"
         android:textColor="@color/colorWhite"
-        android:id="@+id/report_crime_button"
+        android:id="@+id/search_violations"
+        android:onClick=""
         />
     </LinearLayout>
 </RelativeLayout>

@@ -7,6 +7,9 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.media.MediaRecorder;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -39,7 +42,7 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 
-public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRecognitionServerEvents {
+public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRecognitionServerEvents, View.OnClickListener {
 
     Button record, send;
     EditText report;
@@ -57,7 +60,8 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
 
         getSupportActionBar().setTitle("Report Crime");
         record = findViewById(R.id.record_button);
-        send = findViewById(R.id.report_crime_button);
+        send = findViewById(R.id.search_violations);
+        send.setOnClickListener(this);
         report = findViewById(R.id.report_text);
         if(!gotPermission)//Keep requesting until granted
         {
@@ -69,13 +73,26 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
                 //starts recording
                 //first check if audio permission is granted or not
                 if(!button_stop) {
-
+                    try {
+                        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                        r.play();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     startRecording(v);
                     record.setBackgroundResource(R.drawable.stop);
                     button_stop = true;
                 }
                 else
                 {
+                    try {
+                        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                        r.play();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     stopRecording(v);
                     record.setBackgroundResource(R.drawable.record);
                     button_stop = false;
@@ -231,5 +248,14 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
     public void onAudioEvent(boolean b) {
 
         Toast.makeText(this,"listening",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.search_violations:
+
+                break;
+        }
     }
 }
