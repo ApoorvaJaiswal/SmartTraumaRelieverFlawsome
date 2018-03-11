@@ -44,9 +44,12 @@ public class DBHelper {
     {
         int crimeId = generatedCrimeId();
         Timestamp t= new Timestamp(System.currentTimeMillis());
+        Boolean val =false;
         myRef.child("users").child(uid).child("crimes").child(crimeId+"").child("reportedTimestamp").setValue(t);
         myRef.child("users").child(uid).child("crimes").child(crimeId+"").child("description").setValue(desc);
         myRef.child("users").child(uid).child("crimes").child(crimeId+"").child("reportedTo").setValue(reportedTo);
+        myRef.child("users").child(uid).child("crimes").child(crimeId+"").child("solvedDetails").child("solved").setValue(val);
+
     }
     public static void addSolvedDetails(Boolean solved,String crimeId,String uid)
     {
