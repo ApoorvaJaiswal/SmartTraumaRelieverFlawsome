@@ -1,6 +1,7 @@
 package com.example.jaisa.smarttraumareliever_flawsome;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -8,12 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.jaisa.smarttraumareliever_flawsome.Helpers.DBHelper;
+import com.example.jaisa.smarttraumareliever_flawsome.Helpers.SPHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -21,6 +25,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -34,9 +39,12 @@ public class LoginPage extends AppCompatActivity {
     private Button verifyPhoneButton,signOutButton,sendSMSButton;
     private EditText phoneText,usernameText;
     private EditText verifies[] = new EditText[6];
-    private String enteredVerificationCode = "******",veriId;;
+    private String enteredVerificationCode = "******",veriId,uid,phone;
     private ProgressDialog progressDialog;
     private LinearLayout verificationCode;
+    public int noOfValuesInSharedPref =0;
+    public static Context context;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,6 +197,11 @@ public class LoginPage extends AppCompatActivity {
                     UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(usernameText.getText().toString()).build();
                     mCurrentUser.updateProfile(userProfileChangeRequest);
                     Toast.makeText(LoginPage.this, "Verification Success", Toast.LENGTH_SHORT).show();
+                    uid= mCurrentUser.getUid();
+                    phone = mCurrentUser.getPhoneNumber();
+                    Log.e("id",uid);
+                    storeValuesInSharedPref();
+                    addUserToDB();
                     startActivity(new Intent(LoginPage.this, MainActivity.class));
                 } else {
                     // Sign in failed, display a message and update the UI
@@ -200,5 +213,27 @@ public class LoginPage extends AppCompatActivity {
             }
         });
         progressDialog.hide();
+    }
+    public void storeValuesInSharedPref()
+    {
+        int n;
+        context = this;
+        String noOfUserString = SPHelper.getSP(this,"totalUsers");
+        if(noOfUserString.equals("none"))
+            n=0;
+        else
+            n = Integer.parseInt(noOfUserString);
+        ++n;
+        SPHelper.setSP(this,"uid"+n,uid);
+        SPHelper.setSP(this,"phone"+n,phone);
+        SPHelper.setSP(this,"username"+n,usernameText.getText().toString());
+        SPHelper.setSP(this,"totalUsers",n+"");
+        SPHelper.setSP(this,"currentUser",n+"");
+        Log.e("user, phone, uid, n",usernameText.getText().toString()+" , "+phone+" , "+uid+" , "+n);
+    }
+    public void addUserToDB()
+    {
+        DBHelper.initialize();
+        DBHelper.addUser();
     }
 }
