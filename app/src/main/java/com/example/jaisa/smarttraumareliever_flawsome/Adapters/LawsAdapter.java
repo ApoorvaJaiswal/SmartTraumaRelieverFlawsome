@@ -8,11 +8,11 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import com.example.jaisa.smarttraumareliever_flawsome.Beans.Law;
 import com.example.jaisa.smarttraumareliever_flawsome.R;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Varsha on 11-03-2018.
@@ -20,10 +20,12 @@ import java.util.ArrayList;
 
 public class LawsAdapter extends RecyclerView.Adapter<LawsAdapter.ViewHolder> {
 
-    private ArrayList<Law> mLawNames;
+    private ArrayList<String> mLawNames;
+    private ArrayList<String> mLawDescriptions;
 
-    public LawsAdapter(ArrayList<Law> mLawNames) {
-        this.mLawNames = mLawNames;
+    public LawsAdapter(ArrayList<String> lawNames, ArrayList<String> lawDescriptions) {
+        this.mLawNames = lawNames;
+        this.mLawDescriptions = lawDescriptions;
     }
 
     @Override
@@ -36,49 +38,42 @@ public class LawsAdapter extends RecyclerView.Adapter<LawsAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-
-        holder.mLawName.setText("Law name" + position);
-        holder.mLawText.setText("Law Desc" + position);
-
-        holder.mLawName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                holder.mLawDesc.toggle();
-            }
-        });
-
-    }
-
-    @Override
     public int getItemCount() {
-        //return mLawNames.size() ;
-        return 4;
+        return mLawNames.size() ;
+        //return 4;
+    }
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        String lawName = mLawNames.get(position);
+        String lawDescription = mLawDescriptions.get(position);
+        holder.bindLaw(lawName, lawDescription);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
-        public ExpandableRelativeLayout mLawDesc;
-        public Button mLawName;
-        public TextView mLawText;
+        private ExpandableRelativeLayout mLawDesc;
+        private Button mLawName;
+        private TextView mLawText;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mLawDesc = (ExpandableRelativeLayout) itemView.findViewById(R.id.el1);
-            mLawDesc.toggle();
-
             mLawName = (Button) itemView.findViewById(R.id.expandableButton);
-            mLawName.setText("Law name");
-
+            mLawDesc = (ExpandableRelativeLayout) itemView.findViewById(R.id.el1);
             mLawText = (TextView) itemView.findViewById(R.id.elt1);
-            mLawText.setText("Law Desc");
 
+            mLawName.setText("Law name 1");
+            mLawDesc.toggle();
+            mLawText.setText("Law Desc 1");
+        }
+        public void bindLaw(String lawName, String lawDescription){
+            mLawName.setText(lawName);
+            mLawText.setText(lawDescription);
             mLawName.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View v) {
                     mLawDesc.toggle();
                 }
             });
         }
     }
+
 }

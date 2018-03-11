@@ -23,7 +23,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.jaisa.smarttraumareliever_flawsome.Beans.Law;
 import com.microsoft.bing.speech.Conversation;
 import com.microsoft.bing.speech.SpeechClientStatus;
 import com.microsoft.cognitiveservices.speechrecognition.DataRecognitionClient;
@@ -36,6 +35,7 @@ import com.microsoft.cognitiveservices.speechrecognition.SpeechRecognitionServic
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -45,7 +45,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 
@@ -55,13 +54,12 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
     EditText report;
     TextView helpText;
     int helpVisibility = 0;
-    static boolean gotPermission = false, button_stop = false;
-    String result = "", displayText = "";
+    static boolean gotPermission = false, button_stop=false;
+    String result="",displayText="";
 
     MicrophoneRecognitionClient micClient = null;
     int m_waitSeconds = 0;
     DataRecognitionClient dataClient = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +73,7 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
         helpText = findViewById(R.id.helpText);
         helpText.setVisibility(View.INVISIBLE);
 
-        if (!gotPermission)//Keep requesting until granted
+        if(!gotPermission)//Keep requesting until granted
         {
             requestPermissionAudio();
         }
@@ -84,11 +82,13 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
             public void onClick(View v) {
                 //starts recording
                 //first check if audio permission is granted or not
-                if (!button_stop) {
+                if(!button_stop) {
                     startRecording(v);
                     record.setBackgroundResource(R.drawable.stop);
                     button_stop = true;
-                } else {
+                }
+                else
+                {
                     stopRecording(v);
                     record.setBackgroundResource(R.drawable.record);
                     button_stop = false;
@@ -99,21 +99,22 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
             @Override
             public void onClick(View v) {
                 String valueText = report.getText().toString();
-                if (!valueText.equals("")) {
+                if(!valueText.equals("")) {
                     AsyncFetch asyncFetch = new AsyncFetch();
                     asyncFetch.execute(new String[]{valueText});
                 }
-                startActivity(new Intent(ReportCrimeActivity.this, CrimeDetailsActivity.class));
+                //startActivity(new Intent(ReportCrimeActivity.this, CrimeDetailsActivity.class));
 
             }
         });
         helpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (helpVisibility == 0) {
+                if(helpVisibility == 0){
                     helpText.setVisibility(View.VISIBLE);
                     helpVisibility = 1;
-                } else {
+                }
+                else {
                     helpText.setVisibility(View.INVISIBLE);
                     helpVisibility = 0;
                 }
@@ -121,9 +122,9 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
             }
         });
     }
-
-    private void requestPermissionAudio() {
-        if (Build.VERSION.SDK_INT >= 23) {
+    private void requestPermissionAudio()
+    {
+        if(Build.VERSION.SDK_INT >= 23) {
             if (ContextCompat.checkSelfPermission(getApplicationContext(),
                     Manifest.permission.RECORD_AUDIO)
                     != PackageManager.PERMISSION_GRANTED) {
@@ -154,23 +155,25 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
                             new String[]{Manifest.permission.RECORD_AUDIO},
                             1);
                 }
-            } else//permission already granted
+            }
+            else//permission already granted
             {
                 gotPermission = true;
             }
         }
     }
-
-    private void startRecording(View v) {
+    private void startRecording(View v)
+    {
         //first request permission if not granted
-        if (!gotPermission)//Keep requesting until granted
+        if(!gotPermission)//Keep requesting until granted
         {
             requestPermissionAudio();
         }
-        //Proceed to recording speech
+         //Proceed to recording speech
         m_waitSeconds = 200;
-        if (this.micClient == null) {
-            this.micClient = SpeechRecognitionServiceFactory.createMicrophoneClient(
+        if(this.micClient == null)
+        {
+           this.micClient= SpeechRecognitionServiceFactory.createMicrophoneClient(
                     this,
                     SpeechRecognitionMode.LongDictation,
                     getDefaultLocale(),
@@ -182,9 +185,10 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
         this.micClient.startMicAndRecognition();
 
     }
-
-    private void stopRecording(View view) {
-        if (micClient != null && gotPermission) {
+    private void stopRecording(View view)
+    {
+        if(micClient != null && gotPermission)
+        {
             micClient.endMicAndRecognition();
             report.setText(displayText);
             report.post(new Runnable() {
@@ -199,11 +203,14 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        if (requestCode == 1) {
-            if (grantResults.length != 0 && (grantResults[0] == PackageManager.PERMISSION_GRANTED))//Good! We may proceed with speech to text conversion now!
+        if(requestCode == 1)
+        {
+            if (grantResults.length!=0 &&(grantResults[0] == PackageManager.PERMISSION_GRANTED))//Good! We may proceed with speech to text conversion now!
             {
                 gotPermission = true;
-            } else {
+            }
+            else
+            {
                 //Toast.makeText(getApplicationContext(),"Please grant permission to proceed",Toast.LENGTH_SHORT).show();
             }
         }
@@ -227,21 +234,22 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
     public void onPartialResponseReceived(String s) {
         //display while speaking
         result = s;
-        Log.e("Writing", s);
+        Log.e("Writing",s);
     }
 
     @Override
     public void onFinalResponseReceived(RecognitionResult response) {
 
-        Log.e("called", "called now");
-        for (int i = 0; i < response.Results.length; i++) {
-            Log.e("arr", response.Results[i].DisplayText + "......." + response.Results[i].Confidence);
-            displayText = displayText + " " + response.Results[i].DisplayText;
-        }
-        if (response.RecognitionStatus == RecognitionStatus.EndOfDictation ||
+    Log.e("called","called now");
+    for(int i=0;i<response.Results.length;i++)
+    {
+        Log.e("arr",response.Results[i].DisplayText+"......."+response.Results[i].Confidence);
+        displayText = displayText +" "+ response.Results[i].DisplayText;
+    }
+        if(response.RecognitionStatus == RecognitionStatus.EndOfDictation ||
                 response.RecognitionStatus == RecognitionStatus.DictationEndSilenceTimeout)//end
         {
-            // Toast.makeText(getApplicationContext(),"Audio stopped",Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getApplicationContext(),"Audio stopped",Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -253,23 +261,23 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
 
     @Override
     public void onError(int i, String s) {
-        Log.e("error", s);
+    Log.e("error",s);
     }
 
     @Override
     public void onAudioEvent(boolean b) {
 
-        Toast.makeText(this, "listening", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"listening",Toast.LENGTH_SHORT).show();
     }
 
     private class AsyncFetch extends AsyncTask {
 
         ProgressDialog pdLoading = new ProgressDialog(ReportCrimeActivity.this);
         private char ch;
-        private String res;
+        private String res,value="";
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute(){
             super.onPreExecute();
             pdLoading.setMessage("\tLoading...");
             pdLoading.setCancelable(false);
@@ -279,21 +287,21 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
         @Override
         protected Object doInBackground(Object[] params) {
             //Toast.makeText(getActivity(), tabNum+"", Toast.LENGTH_SHORT).show();
-            String value = (String) params[0];
+            value = (String)params[0];
             //aa="hiiiiHello";
 
-            try {
+            try{
                 String link = "http://websiteyo.pythonanywhere.com/";
-                String data = "";
+                String data="";
                 try {
-                    data = URLEncoder.encode("ind", "UTF-8") + "=" + URLEncoder.encode(value, "UTF-8") + "&" + URLEncoder.encode("work", "UTF-8") + "=" + URLEncoder.encode("retrieve", "UTF-8");
+                    data = URLEncoder.encode("ind", "UTF-8")+"="+URLEncoder.encode(value,"UTF-8")+"&"+URLEncoder.encode("work", "UTF-8")+"="+URLEncoder.encode("retrieve","UTF-8");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
                 //String data = "status=registered";
 
                 URL url = new URL(link);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                 conn.setRequestMethod("POST");
 
                 conn.setDoOutput(true);
@@ -308,38 +316,45 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
 
                 int c = 1;
                 //String name="", address="", phone="", comments="";
-                while ((line = rd.readLine()) != null) {
+                while((line = rd.readLine()) != null) {
                     //sb.append(line);
-                    sb = sb + line;
+                    sb = sb+line;
                     //break;
                 }
                 //aa=sb+"    "+sb.length();
-                res = sb;
+                res=sb;
                 return sb;
 
-            } catch (Exception e) {
+            } catch(Exception e){
                 return new String("Exception: " + e.getMessage());
             }
         }
 
         @Override
-        protected void onPostExecute(Object result) {
+        protected void onPostExecute(Object result){
             pdLoading.hide();
-            Toast.makeText(ReportCrimeActivity.this, "" + res, Toast.LENGTH_SHORT).show();
-        }
-    }
+            String r[] = new String[16];
+            int size=0;
+            String display="";
+            try{
+                JSONArray jsonArray = new JSONArray(res);
+                for(int i=0; i<jsonArray.length(); i++){
+                    r[i] = jsonArray.getString(i);
+                    display += "\n"+r[i];
+                }
+                size = jsonArray.length();
+            }catch (JSONException e){
 
-    public ArrayList<Law> parseJson(String jsonData) {
-        ArrayList<Law> mLawNames = new ArrayList<>();
-        try {
-            JSONArray root = new JSONArray(jsonData);
-            for (int i = 0; i < root.length(); i++) {
-                String name = root.getString(i);
-                mLawNames.add(new Law(name, ""));
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+            Intent intent = new Intent(ReportCrimeActivity.this, CrimeDetailsActivity.class);
+            Bundle b=new Bundle();
+            b.putStringArray("laws", r);
+            b.putInt("size", size);
+            b.putString("incident", value);
+            intent.putExtras(b);
+            Toast.makeText(ReportCrimeActivity.this, ""+display, Toast.LENGTH_SHORT).show();
+            startActivity(intent);
         }
-        return mLawNames;
+
     }
 }
