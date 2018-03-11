@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:drawableRight="@android:drawable/arrow_down_float"
-        android:onClick="expanda"
         android:paddingRight="10dp"
         android:text="Question"
         android:textStyle="bold"

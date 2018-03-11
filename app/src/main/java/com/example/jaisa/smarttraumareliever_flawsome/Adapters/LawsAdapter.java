@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.example.jaisa.smarttraumareliever_flawsome.Beans.Law;
 import com.example.jaisa.smarttraumareliever_flawsome.R;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
@@ -17,14 +18,11 @@ import java.util.ArrayList;
  * Created by Varsha on 11-03-2018.
  */
 
-public class LawsAdapter extends RecyclerView.Adapter<LawsAdapter.ViewHolder> implements View.OnClickListener {
+public class LawsAdapter extends RecyclerView.Adapter<LawsAdapter.ViewHolder> {
 
-    private ArrayList<String> mLawNames;
-    public ExpandableRelativeLayout mLawDesc;
-    public Button mLawName;
-    public TextView mLawText;
+    private ArrayList<Law> mLawNames;
 
-    public LawsAdapter(ArrayList<String> mLawNames) {
+    public LawsAdapter(ArrayList<Law> mLawNames) {
         this.mLawNames = mLawNames;
     }
 
@@ -38,21 +36,31 @@ public class LawsAdapter extends RecyclerView.Adapter<LawsAdapter.ViewHolder> im
     }
 
     @Override
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+
+        holder.mLawName.setText("Law name" + position);
+        holder.mLawText.setText("Law Desc" + position);
+
+        holder.mLawName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.mLawDesc.toggle();
+            }
+        });
+
+    }
+
+    @Override
     public int getItemCount() {
         //return mLawNames.size() ;
         return 4;
     }
 
-    @Override
-    public void onClick(View view) {
-        switch(view.getId()){
-            case R.id.expandableButton:
-                mLawDesc.toggle();
-                break;
-        }
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
+
+        public ExpandableRelativeLayout mLawDesc;
+        public Button mLawName;
+        public TextView mLawText;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -60,21 +68,17 @@ public class LawsAdapter extends RecyclerView.Adapter<LawsAdapter.ViewHolder> im
             mLawDesc.toggle();
 
             mLawName = (Button) itemView.findViewById(R.id.expandableButton);
-            mLawName.setText("Law name 1");
+            mLawName.setText("Law name");
 
             mLawText = (TextView) itemView.findViewById(R.id.elt1);
-            mLawText.setText("Law Desc 1");
+            mLawText.setText("Law Desc");
+
+            mLawName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mLawDesc.toggle();
+                }
+            });
         }
-    }
-
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 }

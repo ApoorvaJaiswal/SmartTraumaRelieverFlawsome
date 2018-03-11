@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.jaisa.smarttraumareliever_flawsome.Adapters.LawsAdapter;
+import com.example.jaisa.smarttraumareliever_flawsome.Beans.Law;
 
 import java.util.ArrayList;
 
@@ -14,7 +15,7 @@ public class CrimeDetailsActivity extends AppCompatActivity {
     private RecyclerView mLawsView;
     private RecyclerView.LayoutManager mLawsLayoutManager;
     private RecyclerView.Adapter mLawsAdapter;
-    private ArrayList<String> mLawNames;
+    private ArrayList<Law> mLawNames;
 
     String[] crimeTitles = {"300. Murder",
             "304B. Dowry Death",
@@ -64,6 +65,7 @@ public class CrimeDetailsActivity extends AppCompatActivity {
         mLawsView.setHasFixedSize(true);
         mLawsLayoutManager = new LinearLayoutManager(this);
         mLawsView.setLayoutManager(mLawsLayoutManager);
+
         mLawsAdapter =  new LawsAdapter(mLawNames);
         mLawsView.setAdapter(mLawsAdapter);
 
