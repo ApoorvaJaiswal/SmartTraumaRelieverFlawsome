@@ -38,6 +38,7 @@ public class DBHelper {
     }
     public static void addCrime(String uid,String desc,String reportedTo)
     {
+        initialize();
         int crimeId = generatedCrimeId();
         Timestamp t= new Timestamp(System.currentTimeMillis());
         Boolean val =false;
@@ -49,8 +50,10 @@ public class DBHelper {
     }
     public static void addSolvedDetails(Boolean solved,String crimeId,String uid)
     {
+        initialize();
         Timestamp t= new Timestamp(System.currentTimeMillis());
         myRef.child("users").child(uid).child("crimes").child(crimeId+"").child("solvedDetails").child("solved").setValue(solved);
         myRef.child("users").child(uid).child("crimes").child(crimeId+"").child("solvedDetails").child("solvedTimestamp").setValue(t);
     }
+
 }
