@@ -22,9 +22,6 @@ public class LawsAdapter extends RecyclerView.Adapter<LawsAdapter.ViewHolder> {
 
     private ArrayList<String> mLawNames;
     private ArrayList<String> mLawDescriptions;
-    public ExpandableRelativeLayout mLawDesc;
-    public Button mLawName;
-    public TextView mLawText;
 
     public LawsAdapter(ArrayList<String> lawNames, ArrayList<String> lawDescriptions) {
         this.mLawNames = lawNames;
@@ -42,8 +39,8 @@ public class LawsAdapter extends RecyclerView.Adapter<LawsAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        //return mLawNames.size() ;
-        return 4;
+        return mLawNames.size() ;
+        //return 4;
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
@@ -52,11 +49,10 @@ public class LawsAdapter extends RecyclerView.Adapter<LawsAdapter.ViewHolder> {
         holder.bindLaw(lawName, lawDescription);
     }
 
-    public void expandableButton(View view) {
-        mLawDesc.toggle(); // toggle expand and collapse
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
+        private ExpandableRelativeLayout mLawDesc;
+        private Button mLawName;
+        private TextView mLawText;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -71,6 +67,12 @@ public class LawsAdapter extends RecyclerView.Adapter<LawsAdapter.ViewHolder> {
         public void bindLaw(String lawName, String lawDescription){
             mLawName.setText(lawName);
             mLawText.setText(lawDescription);
+            mLawName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mLawDesc.toggle();
+                }
+            });
         }
     }
 

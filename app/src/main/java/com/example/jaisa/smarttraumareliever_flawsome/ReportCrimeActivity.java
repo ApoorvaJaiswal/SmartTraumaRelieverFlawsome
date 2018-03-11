@@ -274,7 +274,7 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
 
         ProgressDialog pdLoading = new ProgressDialog(ReportCrimeActivity.this);
         private char ch;
-        private String res;
+        private String res,value="";
 
         @Override
         protected void onPreExecute(){
@@ -287,7 +287,7 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
         @Override
         protected Object doInBackground(Object[] params) {
             //Toast.makeText(getActivity(), tabNum+"", Toast.LENGTH_SHORT).show();
-            String value = (String)params[0];
+            value = (String)params[0];
             //aa="hiiiiHello";
 
             try{
@@ -350,6 +350,7 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
             Bundle b=new Bundle();
             b.putStringArray("laws", r);
             b.putInt("size", size);
+            b.putString("incident", value);
             intent.putExtras(b);
             Toast.makeText(ReportCrimeActivity.this, ""+display, Toast.LENGTH_SHORT).show();
             startActivity(intent);

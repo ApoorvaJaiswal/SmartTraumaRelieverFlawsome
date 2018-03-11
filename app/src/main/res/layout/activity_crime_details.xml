@@ -14,15 +14,17 @@
         android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textStyle="bold|italic"
+        android:textSize="16dp"
+        android:layout_height="55sp"
+        android:layout_marginBottom="10dp"
         android:text="The given incident description falls under the following Laws:"
         android:textColor="#000000"/>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/laws_view"
-        android:layout_weight="5">
+        android:layout_height="400sp"
+        android:id="@+id/laws_view">
 
     </android.support.v7.widget.RecyclerView>
     <LinearLayout
@@ -85,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:background="@drawable/good_button"
+            android:background="@drawable/additional_comments_look"
             android:id="@+id/additionaCommentsDoneButton"
             android:text="Done"/>
     </LinearLayout>

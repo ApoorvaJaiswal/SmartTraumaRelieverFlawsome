@@ -27,6 +27,7 @@
             android:text="Incident:"/>
         <TextView
             android:layout_width="match_parent"
+            android:id="@+id/incidentTextBox"
             android:text="The bride was killed for money. They were asked for a sum of Rs 25 lakh."
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -42,6 +43,7 @@
             android:text="Additional Comments:"/>
         <TextView
             android:layout_width="match_parent"
+            android:id="@+id/additionalCommentsTextBox"
             android:text="Nothing for now"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -57,6 +59,7 @@
             android:text="Laws Violated:"/>
         <TextView
             android:layout_width="match_parent"
+            android:id="@+id/lawsViolatedTextBox"
             android:text="1. Equal Renumeration Act, 1976
 2. Maternity Benefits Act 1961
 3. The Indecent Representation of Women (Prohibition) Act, 1986
@@ -67,6 +70,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:id="@+id/homeButton"
         android:layout_marginBottom="10dp"
         android:text="BACK TO HOME"
         android:background="#000000"
