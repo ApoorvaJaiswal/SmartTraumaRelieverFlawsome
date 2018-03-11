@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:layout_margin="15dp"
-    tools:context="com.example.jaisa.smarttraumareliever_flawsome.LoginPage">
+    tools:context="com.example.jaisa.smarttraumareliever_flawsome.LoginPageActivity">
 
     <ImageView
         android:layout_width="100dp"

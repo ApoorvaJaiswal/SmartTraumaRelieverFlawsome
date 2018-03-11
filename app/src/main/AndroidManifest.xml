@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginPage" />
+        <activity android:name=".LoginPageActivity" />
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".ProfileActivity" />
         <activity android:name=".ReportCrimeActivity">
@@ -28,7 +28,7 @@
             android:name=".DisplayCrimesActivity"
             android:label="@string/title_activity_display_crimes"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".CrimeDetails"></activity>
+        <activity android:name=".CrimeDetailsActivity"></activity>
     </application>
 
 </manifest>

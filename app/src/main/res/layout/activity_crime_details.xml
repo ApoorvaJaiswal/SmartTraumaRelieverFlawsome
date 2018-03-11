@@ -5,51 +5,63 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context="com.example.jaisa.smarttraumareliever_flawsome.CrimeDetails">
+    android:layout_margin="15dp"
+    tools:context="com.example.jaisa.smarttraumareliever_flawsome.CrimeDetailsActivity">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="The given incident description falls under the following Laws:"
-        android:textColor="#000000"/>
+        android:textColor="#000000"
+        />
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:id="@+id/laws_view"
+        >
     </android.support.v7.widget.RecyclerView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_marginRight="90dp"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
             <Button
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="30dp"
-                android:background="@drawable/additional_comments"/>
+                android:background="@drawable/additional_comments" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#000000"
-                android:text="Additional Comments"/>
+                android:text="Additional Comments"
+                android:textColor="#000000" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
             <Button
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:background="@drawable/handcufs1"/>
+                android:background="@drawable/handcufs1" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:textColor="#000000"
-                android:text="Lodge FIR"/>
+                android:text="Lodge FIR"
+                android:textColor="#000000" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

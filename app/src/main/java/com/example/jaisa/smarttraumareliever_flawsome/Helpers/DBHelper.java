@@ -3,14 +3,10 @@ package com.example.jaisa.smarttraumareliever_flawsome.Helpers;
 /**
  * Created by jaisa on 3/11/2018.
  */
-import android.content.Intent;
 
-import com.example.jaisa.smarttraumareliever_flawsome.LoginPage;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.example.jaisa.smarttraumareliever_flawsome.LoginPageActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Timestamp;
 
@@ -27,14 +23,14 @@ public class DBHelper {
     }
     public static void addUser()
     {
-        if(SPHelper.getSP(LoginPage.context,"currentUser").equals("none"))
+        if(SPHelper.getSP(LoginPageActivity.context,"currentUser").equals("none"))
             return;
         else
         {
-            int n= Integer.parseInt(SPHelper.getSP(LoginPage.context,"currentUser"));
-            String name= SPHelper.getSP(LoginPage.context,"username"+n);
-            String phone= SPHelper.getSP(LoginPage.context,"phone"+n);
-            String uid= SPHelper.getSP(LoginPage.context,"uid"+n);
+            int n= Integer.parseInt(SPHelper.getSP(LoginPageActivity.context,"currentUser"));
+            String name= SPHelper.getSP(LoginPageActivity.context,"username"+n);
+            String phone= SPHelper.getSP(LoginPageActivity.context,"phone"+n);
+            String uid= SPHelper.getSP(LoginPageActivity.context,"uid"+n);
             myRef.child("users").child(uid);
             myRef.child("users").child(uid).child("name").setValue(name);
             myRef.child("users").child(uid).child("phone").setValue(phone);
