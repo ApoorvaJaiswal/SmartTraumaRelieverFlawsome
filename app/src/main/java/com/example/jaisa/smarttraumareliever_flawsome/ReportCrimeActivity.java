@@ -173,7 +173,7 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
                     getPrimaryKey());
             //this.micClient.setAuthenticationUri(this.getAuthenticationUri());
         }
-        Toast.makeText(this,"Recording",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,"Recording",Toast.LENGTH_SHORT).show();
         this.micClient.startMicAndRecognition();
 
     }
@@ -241,7 +241,7 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
         if(response.RecognitionStatus == RecognitionStatus.EndOfDictation ||
                 response.RecognitionStatus == RecognitionStatus.DictationEndSilenceTimeout)//end
         {
-            Toast.makeText(getApplicationContext(),"Audio stopped",Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getApplicationContext(),"Audio stopped",Toast.LENGTH_SHORT).show();
 
         }
     }
