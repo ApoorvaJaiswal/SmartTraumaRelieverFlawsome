@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * Created by Varsha on 11-03-2018.
  */
 
-public class LawsAdapter extends RecyclerView.Adapter<LawsAdapter.ViewHolder> {
+public class LawsAdapter extends RecyclerView.Adapter<LawsAdapter.ViewHolder> implements View.OnClickListener {
 
     private ArrayList<String> mLawNames;
     public ExpandableRelativeLayout mLawDesc;
@@ -43,23 +43,32 @@ public class LawsAdapter extends RecyclerView.Adapter<LawsAdapter.ViewHolder> {
         return 4;
     }
 
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.expandableButton:
+                mLawDesc.toggle();
+                break;
+        }
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mLawName = (Button) itemView.findViewById(R.id.expandableButton);
             mLawDesc = (ExpandableRelativeLayout) itemView.findViewById(R.id.el1);
-            mLawText = (TextView) itemView.findViewById(R.id.elt1);
-
-            mLawName.setText("Law name 1");
             mLawDesc.toggle();
+
+            mLawName = (Button) itemView.findViewById(R.id.expandableButton);
+            mLawName.setText("Law name 1");
+
+            mLawText = (TextView) itemView.findViewById(R.id.elt1);
             mLawText.setText("Law Desc 1");
         }
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        //holder.mLawName.setText("Law name");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,9 +76,5 @@ public class LawsAdapter extends RecyclerView.Adapter<LawsAdapter.ViewHolder> {
 
             }
         });
-    }
-
-    public void expandableButton(View view) {
-        mLawDesc.toggle(); // toggle expand and collapse
     }
 }
