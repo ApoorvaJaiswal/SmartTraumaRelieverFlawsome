@@ -5,6 +5,7 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -67,6 +68,7 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
         helpButton = findViewById(R.id.helpButton);
         helpText = findViewById(R.id.helpText);
         helpText.setVisibility(View.INVISIBLE);
+
         if(!gotPermission)//Keep requesting until granted
         {
             requestPermissionAudio();
@@ -97,6 +99,8 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
                     AsyncFetch asyncFetch = new AsyncFetch();
                     asyncFetch.execute(new String[]{valueText});
                 }
+                startActivity(new Intent(ReportCrimeActivity.this, CrimeDetailsActivity.class));
+
             }
         });
         helpButton.setOnClickListener(new View.OnClickListener() {

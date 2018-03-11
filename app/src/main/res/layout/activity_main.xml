@@ -46,12 +46,11 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
                 android:elevation="9dp"
                 >
                 <ImageView
-                    android:layout_width="370dp"
-                    android:layout_height="140dp"
+                    android:layout_width="375dp"
+                    android:layout_height="145dp"
                     android:src="@drawable/report"
                     android:alpha="0.4"
                     android:id="@+id/img_speak"
@@ -83,12 +82,11 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
                 android:elevation="9dp"
                 >
                 <ImageView
                     android:layout_width="370dp"
-                    android:layout_height="140dp"
+                    android:layout_height="148dp"
                     android:src="@drawable/img_reports_bg"
                     android:id="@+id/img_reports"
                     android:alpha="0.4"
@@ -119,12 +117,11 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
                 android:elevation="9dp"
                 >
                 <ImageView
                     android:layout_width="370dp"
-                    android:layout_height="140dp"
+                    android:layout_height="150dp"
                     android:src="@drawable/img_solved"
                     android:id="@+id/img_solved"
                     android:layout_centerHorizontal="true"
