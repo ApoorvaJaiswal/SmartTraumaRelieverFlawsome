@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.microsoft.bing.speech.Conversation;
@@ -44,8 +45,10 @@ import java.util.concurrent.TimeUnit;
 
 public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRecognitionServerEvents {
 
-    Button record, send;
+    Button record, send, helpButton;
     EditText report;
+    TextView helpText;
+    int helpVisibility = 0;
     static boolean gotPermission = false, button_stop=false;
     String result="",displayText="";
 
@@ -61,6 +64,9 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
         record = findViewById(R.id.record_button);
         send = findViewById(R.id.report_crime_button);
         report = findViewById(R.id.report_text);
+        helpButton = findViewById(R.id.helpButton);
+        helpText = findViewById(R.id.helpText);
+        helpText.setVisibility(View.INVISIBLE);
         if(!gotPermission)//Keep requesting until granted
         {
             requestPermissionAudio();
@@ -91,6 +97,20 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
                     AsyncFetch asyncFetch = new AsyncFetch();
                     asyncFetch.execute(new String[]{valueText});
                 }
+            }
+        });
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(helpVisibility == 0){
+                    helpText.setVisibility(View.VISIBLE);
+                    helpVisibility = 1;
+                }
+                else {
+                    helpText.setVisibility(View.INVISIBLE);
+                    helpVisibility = 0;
+                }
+
             }
         });
     }
