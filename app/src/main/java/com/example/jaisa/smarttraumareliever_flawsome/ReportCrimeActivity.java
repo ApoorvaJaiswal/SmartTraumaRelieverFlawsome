@@ -3,12 +3,13 @@ package com.example.jaisa.smarttraumareliever_flawsome;
 import android.*;
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.media.MediaRecorder;
+import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.microsoft.bing.speech.Conversation;
@@ -31,21 +33,29 @@ import com.microsoft.cognitiveservices.speechrecognition.RecognitionStatus;
 import com.microsoft.cognitiveservices.speechrecognition.SpeechRecognitionMode;
 import com.microsoft.cognitiveservices.speechrecognition.SpeechRecognitionServiceFactory;
 
-import java.io.File;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.concurrent.TimeUnit;
 
 
 public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRecognitionServerEvents {
 
-    Button record, send;
+    Button record, send, helpButton;
     EditText report;
+    TextView helpText;
+    int helpVisibility = 0;
     static boolean gotPermission = false, button_stop=false;
     String result="",displayText="";
-
 
     MicrophoneRecognitionClient micClient = null;
     int m_waitSeconds = 0;
@@ -59,6 +69,10 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
         record = findViewById(R.id.record_button);
         send = findViewById(R.id.report_crime_button);
         report = findViewById(R.id.report_text);
+        helpButton = findViewById(R.id.helpButton);
+        helpText = findViewById(R.id.helpText);
+        helpText.setVisibility(View.INVISIBLE);
+
         if(!gotPermission)//Keep requesting until granted
         {
             requestPermissionAudio();
@@ -69,7 +83,6 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
                 //starts recording
                 //first check if audio permission is granted or not
                 if(!button_stop) {
-
                     startRecording(v);
                     record.setBackgroundResource(R.drawable.stop);
                     button_stop = true;
@@ -82,8 +95,33 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
                 }
             }
         });
-    }
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String valueText = report.getText().toString();
+                if(!valueText.equals("")) {
+                    AsyncFetch asyncFetch = new AsyncFetch();
+                    asyncFetch.execute(new String[]{valueText});
+                }
+                //startActivity(new Intent(ReportCrimeActivity.this, CrimeDetailsActivity.class));
 
+            }
+        });
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(helpVisibility == 0){
+                    helpText.setVisibility(View.VISIBLE);
+                    helpVisibility = 1;
+                }
+                else {
+                    helpText.setVisibility(View.INVISIBLE);
+                    helpVisibility = 0;
+                }
+
+            }
+        });
+    }
     private void requestPermissionAudio()
     {
         if(Build.VERSION.SDK_INT >= 23) {
@@ -199,7 +237,6 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
         Log.e("Writing",s);
     }
 
-
     @Override
     public void onFinalResponseReceived(RecognitionResult response) {
 
@@ -231,5 +268,93 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
     public void onAudioEvent(boolean b) {
 
         Toast.makeText(this,"listening",Toast.LENGTH_SHORT).show();
+    }
+
+    private class AsyncFetch extends AsyncTask {
+
+        ProgressDialog pdLoading = new ProgressDialog(ReportCrimeActivity.this);
+        private char ch;
+        private String res,value="";
+
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            pdLoading.setMessage("\tLoading...");
+            pdLoading.setCancelable(false);
+            pdLoading.show();
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            //Toast.makeText(getActivity(), tabNum+"", Toast.LENGTH_SHORT).show();
+            value = (String)params[0];
+            //aa="hiiiiHello";
+
+            try{
+                String link = "http://websiteyo.pythonanywhere.com/";
+                String data="";
+                try {
+                    data = URLEncoder.encode("ind", "UTF-8")+"="+URLEncoder.encode(value,"UTF-8")+"&"+URLEncoder.encode("work", "UTF-8")+"="+URLEncoder.encode("retrieve","UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                //String data = "status=registered";
+
+                URL url = new URL(link);
+                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                conn.setRequestMethod("POST");
+
+                conn.setDoOutput(true);
+                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+                wr.write(data);
+                wr.flush();
+
+                BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String sb = "";
+                String line = null;
+                // Read Server Response
+
+                int c = 1;
+                //String name="", address="", phone="", comments="";
+                while((line = rd.readLine()) != null) {
+                    //sb.append(line);
+                    sb = sb+line;
+                    //break;
+                }
+                //aa=sb+"    "+sb.length();
+                res=sb;
+                return sb;
+
+            } catch(Exception e){
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Object result){
+            pdLoading.hide();
+            String r[] = new String[16];
+            int size=0;
+            String display="";
+            try{
+                JSONArray jsonArray = new JSONArray(res);
+                for(int i=0; i<jsonArray.length(); i++){
+                    r[i] = jsonArray.getString(i);
+                    display += "\n"+r[i];
+                }
+                size = jsonArray.length();
+            }catch (JSONException e){
+
+            }
+            Intent intent = new Intent(ReportCrimeActivity.this, CrimeDetailsActivity.class);
+            Bundle b=new Bundle();
+            b.putStringArray("laws", r);
+            b.putInt("size", size);
+            b.putString("incident", value);
+            intent.putExtras(b);
+            Toast.makeText(ReportCrimeActivity.this, ""+display, Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+        }
+
     }
 }

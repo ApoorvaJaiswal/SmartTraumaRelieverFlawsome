@@ -25,14 +25,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.concurrent.TimeUnit;
 
-public class LoginPage extends AppCompatActivity {
+public class LoginPageActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
@@ -75,13 +74,13 @@ public class LoginPage extends AppCompatActivity {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    //Toast.makeText(LoginPage.this, verifies[j].getText().toString()+ "\n"+ enteredVerificationCode.substring(0, j) + "\n" + verifies[j].getText() + "\n" + enteredVerificationCode.substring(j + 1, 6), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LoginPageActivity.this, verifies[j].getText().toString()+ "\n"+ enteredVerificationCode.substring(0, j) + "\n" + verifies[j].getText() + "\n" + enteredVerificationCode.substring(j + 1, 6), Toast.LENGTH_SHORT).show();
                     if(!verifies[j].getText().toString().equals("")) {
                         enteredVerificationCode = enteredVerificationCode.substring(0, j) + verifies[j].getText() + enteredVerificationCode.substring(j + 1, 6);
                         if (j < 5) {
                             verifies[j + 1].requestFocus();
                         }
-                        //Toast.makeText(LoginPage.this, enteredVerificationCode, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(LoginPageActivity.this, enteredVerificationCode, Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -94,6 +93,10 @@ public class LoginPage extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
+        if(mCurrentUser != null){
+            Intent intent = new Intent(LoginPageActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
@@ -102,7 +105,7 @@ public class LoginPage extends AppCompatActivity {
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
-                Toast.makeText(LoginPage.this, "Verification Failed! Please try again later", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginPageActivity.this, "Verification Failed! Please try again later", Toast.LENGTH_SHORT).show();
                 progressDialog.hide();
             }
 
@@ -113,7 +116,7 @@ public class LoginPage extends AppCompatActivity {
 
             @Override
             public void onCodeAutoRetrievalTimeOut(String s) {
-                Toast.makeText(LoginPage.this, "Verification Pending...",Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginPageActivity.this, "Verification Pending...",Toast.LENGTH_SHORT).show();
                 progressDialog.hide();
             }
         };
@@ -126,7 +129,7 @@ public class LoginPage extends AppCompatActivity {
                 progressDialog.setCancelable(false);
                 progressDialog.show();
                 if(!usernameText.getText().toString().equals("")) {
-                    PhoneAuthProvider.getInstance().verifyPhoneNumber(phoneNumber, 7, TimeUnit.SECONDS, LoginPage.this, mCallbacks);
+                    PhoneAuthProvider.getInstance().verifyPhoneNumber(phoneNumber, 7, TimeUnit.SECONDS, LoginPageActivity.this, mCallbacks);
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -139,7 +142,7 @@ public class LoginPage extends AppCompatActivity {
                     }, 10000);
                 }
                 else {
-                    Toast.makeText(LoginPage.this, "Please enter your Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginPageActivity.this, "Please enter your Name", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -148,32 +151,32 @@ public class LoginPage extends AppCompatActivity {
             public void onClick(View v) {
                 progressDialog.show();
                 if(!usernameText.getText().toString().equals("")) {
-                    //Toast.makeText(LoginPage.this, veriId+"", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LoginPageActivity.this, veriId+"", Toast.LENGTH_SHORT).show();
                     PhoneAuthCredential credential = PhoneAuthProvider.getCredential(veriId, enteredVerificationCode);
                     signInWithPhoneAuthCredential(credential);
                 }
                 else {
-                    Toast.makeText(LoginPage.this, "Please enter your Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginPageActivity.this, "Please enter your Name", Toast.LENGTH_SHORT).show();
                 }
             }
         });
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LoginPage.this, mCurrentUser.getDisplayName() + "....." + mCurrentUser.getPhoneNumber()+"....\nSigning Out...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginPageActivity.this, mCurrentUser.getDisplayName() + "....." + mCurrentUser.getPhoneNumber()+"....\nSigning Out...", Toast.LENGTH_SHORT).show();
                 mCurrentUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(LoginPage.this, "Account Deleted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginPageActivity.this, "Account Deleted", Toast.LENGTH_SHORT).show();
                     }
                 });
                 mAuth.signOut();
-                Toast.makeText(LoginPage.this, "Sign Out Successful", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginPageActivity.this, "Sign Out Successful", Toast.LENGTH_SHORT).show();
                 mCurrentUser = null;
             }
         });
 
-        //Toast.makeText(LoginPage.this,mCurrentUser.getDisplayName()+".."+mCurrentUser.getPhoneNumber(),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(LoginPageActivity.this,mCurrentUser.getDisplayName()+".."+mCurrentUser.getPhoneNumber(),Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -196,18 +199,18 @@ public class LoginPage extends AppCompatActivity {
                     mCurrentUser = user;
                     UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(usernameText.getText().toString()).build();
                     mCurrentUser.updateProfile(userProfileChangeRequest);
-                    Toast.makeText(LoginPage.this, "Verification Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginPageActivity.this, "Verification Success", Toast.LENGTH_SHORT).show();
                     uid= mCurrentUser.getUid();
                     phone = mCurrentUser.getPhoneNumber();
                     Log.e("id",uid);
                     storeValuesInSharedPref();
                     addUserToDB();
-                    startActivity(new Intent(LoginPage.this, MainActivity.class));
+                    startActivity(new Intent(LoginPageActivity.this, MainActivity.class));
                 } else {
                     // Sign in failed, display a message and update the UI
                     if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                         // The verification code entered was invalid
-                        Toast.makeText(LoginPage.this, "Verification Failed! Invalid Code Entered", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginPageActivity.this, "Verification Failed! Invalid Code Entered", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
