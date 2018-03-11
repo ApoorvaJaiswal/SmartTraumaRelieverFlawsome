@@ -33,6 +33,10 @@ import com.microsoft.cognitiveservices.speechrecognition.RecognitionStatus;
 import com.microsoft.cognitiveservices.speechrecognition.SpeechRecognitionMode;
 import com.microsoft.cognitiveservices.speechrecognition.SpeechRecognitionServiceFactory;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -99,7 +103,7 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
                     AsyncFetch asyncFetch = new AsyncFetch();
                     asyncFetch.execute(new String[]{valueText});
                 }
-                startActivity(new Intent(ReportCrimeActivity.this, CrimeDetailsActivity.class));
+                //startActivity(new Intent(ReportCrimeActivity.this, CrimeDetailsActivity.class));
 
             }
         });
@@ -329,7 +333,26 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
         @Override
         protected void onPostExecute(Object result){
             pdLoading.hide();
-            Toast.makeText(ReportCrimeActivity.this, ""+res, Toast.LENGTH_SHORT).show();
+            String r[] = new String[16];
+            int size=0;
+            String display="";
+            try{
+                JSONArray jsonArray = new JSONArray(res);
+                for(int i=0; i<jsonArray.length(); i++){
+                    r[i] = jsonArray.getString(i);
+                    display += "\n"+r[i];
+                }
+                size = jsonArray.length();
+            }catch (JSONException e){
+
+            }
+            Intent intent = new Intent(ReportCrimeActivity.this, CrimeDetailsActivity.class);
+            Bundle b=new Bundle();
+            b.putStringArray("laws", r);
+            b.putInt("size", size);
+            intent.putExtras(b);
+            Toast.makeText(ReportCrimeActivity.this, ""+display, Toast.LENGTH_SHORT).show();
+            startActivity(intent);
         }
 
     }

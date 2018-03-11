@@ -12,6 +12,7 @@ import com.example.jaisa.smarttraumareliever_flawsome.R;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Varsha on 11-03-2018.
@@ -20,12 +21,14 @@ import java.util.ArrayList;
 public class LawsAdapter extends RecyclerView.Adapter<LawsAdapter.ViewHolder> {
 
     private ArrayList<String> mLawNames;
+    private ArrayList<String> mLawDescriptions;
     public ExpandableRelativeLayout mLawDesc;
     public Button mLawName;
     public TextView mLawText;
 
-    public LawsAdapter(ArrayList<String> mLawNames) {
-        this.mLawNames = mLawNames;
+    public LawsAdapter(ArrayList<String> lawNames, ArrayList<String> lawDescriptions) {
+        this.mLawNames = lawNames;
+        this.mLawDescriptions = lawDescriptions;
     }
 
     @Override
@@ -42,6 +45,16 @@ public class LawsAdapter extends RecyclerView.Adapter<LawsAdapter.ViewHolder> {
         //return mLawNames.size() ;
         return 4;
     }
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        String lawName = mLawNames.get(position);
+        String lawDescription = mLawDescriptions.get(position);
+        holder.bindLaw(lawName, lawDescription);
+    }
+
+    public void expandableButton(View view) {
+        mLawDesc.toggle(); // toggle expand and collapse
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -55,21 +68,10 @@ public class LawsAdapter extends RecyclerView.Adapter<LawsAdapter.ViewHolder> {
             mLawDesc.toggle();
             mLawText.setText("Law Desc 1");
         }
+        public void bindLaw(String lawName, String lawDescription){
+            mLawName.setText(lawName);
+            mLawText.setText(lawDescription);
+        }
     }
 
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        //holder.mLawName.setText("Law name");
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-    }
-
-    public void expandableButton(View view) {
-        mLawDesc.toggle(); // toggle expand and collapse
-    }
 }

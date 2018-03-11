@@ -4,17 +4,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.jaisa.smarttraumareliever_flawsome.Adapters.LawsAdapter;
 
 import java.util.ArrayList;
 
 public class CrimeDetailsActivity extends AppCompatActivity {
-
+    private Button lodgeFIRButton, additionalCommentsButton, additionalCommentsDoneButton;
+    private LinearLayout additionalCommentsView, remainderView;
+    private EditText additionalCommentsEditText;
+    private String additionalComments = "";
     private RecyclerView mLawsView;
     private RecyclerView.LayoutManager mLawsLayoutManager;
     private RecyclerView.Adapter mLawsAdapter;
-    private ArrayList<String> mLawNames;
+    private ArrayList<String> mLawNames = new ArrayList<>();
+    private ArrayList<String> mLawDescriptions = new ArrayList<>();
+    private String[] lawsViolated;
+    private int sizeOfLawsViolated;
 
     String[] crimeTitles = {"300. Murder",
             "304B. Dowry Death",
@@ -54,18 +65,66 @@ public class CrimeDetailsActivity extends AppCompatActivity {
             "Whoever, intending to insult the modesty of any woman, utters any word, makes any sound or gesture, or exhibits any object, intending that such word or sound shall be heard, or that such gesture or object shall be seen, by such woman, or intrudes upon the privacy of such woman, shall be punished with simple imprisonment for a term which may extend to three years, and also with fine.\n",
             "To prohibit indecent representation of women through advertisements or in publications, writings, paintings, figures or in any other maner and for matters connected therewith or incidental thereto. Any person who contravenes the provisions shall be punishable on first conviction with imprisonment of either description for a term which may extend to two years, and with fine which may extend to two thousand rupees, and in the event of a second or subsequent conviction with imprisonment for term of not less than six months but which may extend to five years and also with a fine not less than ten thousand rupees but which may extend to one lakh rupees."};
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crime_details);
 
-        //Category RecyclerView
+        Bundle b =getIntent().getExtras();
+        lawsViolated = b.getStringArray("laws");
+        sizeOfLawsViolated = b.getInt("size");
+
+        for(int i=0; i<sizeOfLawsViolated; i++){
+            mLawNames.add(lawsViolated[i]);
+            int flag=0;
+            for(int j=1; j<16; j++){
+                if(mLawNames.equals(crimeTitles[j])){
+                    mLawDescriptions.add(crimeDescriptions[j]);
+                    flag=1;
+                    break;
+                }
+            }
+            if(flag==0){
+                mLawDescriptions.add(crimeDescriptions[0]);
+            }
+        }
+
+        additionalCommentsButton = findViewById(R.id.additionalCommentsButton);
+        additionalCommentsDoneButton = findViewById(R.id.additionaCommentsDoneButton);
+        lodgeFIRButton = findViewById(R.id.lodgeFIRButton);
+        additionalCommentsView = findViewById(R.id.additionalCommentsView);
+        remainderView = findViewById(R.id.remainderView);
+        additionalCommentsEditText = findViewById(R.id.additionalCommentsEditText);
+
+        additionalCommentsView.setVisibility(View.GONE);
+
+        additionalCommentsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                additionalCommentsView.setVisibility(View.VISIBLE);
+                remainderView.setAlpha((float)0.3);
+            }
+        });
+        additionalCommentsDoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                additionalComments = additionalCommentsEditText.getText().toString();
+                additionalCommentsView.setVisibility(View.GONE);
+                remainderView.setAlpha((float)1.0);
+            }
+        });
+
         mLawsView = (RecyclerView) findViewById(R.id.laws_view);
         mLawsView.setHasFixedSize(true);
         mLawsLayoutManager = new LinearLayoutManager(this);
         mLawsView.setLayoutManager(mLawsLayoutManager);
-        mLawsAdapter =  new LawsAdapter(mLawNames);
+        mLawsAdapter =  new LawsAdapter(mLawNames, mLawDescriptions);
         mLawsView.setAdapter(mLawsAdapter);
-
+        /*String display = "";
+        for(int i=0; i<mLawNames.size(); i++){
+            display = display+"\n"+mLawNames.get(i)+":"+mLawDescriptions.get(i);
+        }
+        Toast.makeText(CrimeDetailsActivity.this, display, Toast.LENGTH_SHORT).show();*/
     }
 }
