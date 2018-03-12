@@ -35,7 +35,7 @@ public class LoginPageActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
-    private Button verifyPhoneButton,signOutButton,sendSMSButton;
+    private Button verifyPhoneButton,sendSMSButton;
     private EditText phoneText,usernameText;
     private EditText verifies[] = new EditText[6];
     private String enteredVerificationCode = "******",veriId,uid,phone;
@@ -56,7 +56,6 @@ public class LoginPageActivity extends AppCompatActivity {
         phoneText = findViewById(R.id.phoneText);
         verificationCode = findViewById(R.id.verification_code);
         usernameText = findViewById(R.id.usernameText);
-        signOutButton = findViewById(R.id.signOutButton);
         verificationCode.setVisibility(View.INVISIBLE);
         verifyPhoneButton.setEnabled(false);
         verifyPhoneButton.getBackground().setAlpha(70);
@@ -160,21 +159,6 @@ public class LoginPageActivity extends AppCompatActivity {
                 }
             }
         });
-        signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(LoginPageActivity.this, mCurrentUser.getDisplayName() + "....." + mCurrentUser.getPhoneNumber()+"....\nSigning Out...", Toast.LENGTH_SHORT).show();
-                mCurrentUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(LoginPageActivity.this, "Account Deleted", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                mAuth.signOut();
-                Toast.makeText(LoginPageActivity.this, "Sign Out Successful", Toast.LENGTH_SHORT).show();
-                mCurrentUser = null;
-            }
-        });
 
         //Toast.makeText(LoginPageActivity.this,mCurrentUser.getDisplayName()+".."+mCurrentUser.getPhoneNumber(),Toast.LENGTH_SHORT).show();
     }
@@ -205,7 +189,11 @@ public class LoginPageActivity extends AppCompatActivity {
                     Log.e("id",uid);
                     storeValuesInSharedPref();
                     addUserToDB();
-                    startActivity(new Intent(LoginPageActivity.this, MainActivity.class));
+                    Intent intent = new Intent(LoginPageActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
                 } else {
                     // Sign in failed, display a message and update the UI
                     if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
