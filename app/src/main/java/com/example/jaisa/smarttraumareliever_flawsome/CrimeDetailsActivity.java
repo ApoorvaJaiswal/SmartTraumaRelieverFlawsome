@@ -73,6 +73,12 @@ public class CrimeDetailsActivity extends AppCompatActivity {
         Bundle b =getIntent().getExtras();
         lawsViolated = b.getStringArray("laws");
         sizeOfLawsViolated = b.getInt("size");
+        if(sizeOfLawsViolated == 0){
+            Intent intent = new Intent(CrimeDetailsActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
         incident = b.getString("incident");
 
         lawsViolationDescriptions = new String[16];
@@ -144,6 +150,5 @@ public class CrimeDetailsActivity extends AppCompatActivity {
         for(int i=0; i<mLawNames.size(); i++){
             display = display+"\n"+mLawNames.get(i)+":"+mLawDescriptions.get(i);
         }*/
-        Toast.makeText(CrimeDetailsActivity.this, mLawDescriptions.get(1), Toast.LENGTH_SHORT).show();
     }
 }

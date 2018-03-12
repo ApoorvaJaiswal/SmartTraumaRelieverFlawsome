@@ -139,15 +139,4 @@
         android:fontFamily="sans-serif-condensed"
         android:textColor="#4eb6b6"
         android:text="Verify"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/good_button"
-        android:text="Sign Out"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:fontFamily="sans-serif-condensed"
-        android:textColor="#4eb6b6"
-        android:id="@+id/signOutButton"/>
 </LinearLayout>

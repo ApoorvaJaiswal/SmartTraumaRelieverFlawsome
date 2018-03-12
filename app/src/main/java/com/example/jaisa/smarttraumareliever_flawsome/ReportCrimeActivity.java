@@ -352,7 +352,7 @@ public class ReportCrimeActivity extends AppCompatActivity implements ISpeechRec
             b.putInt("size", size);
             b.putString("incident", value);
             intent.putExtras(b);
-            Toast.makeText(ReportCrimeActivity.this, ""+display, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(ReportCrimeActivity.this, ""+display, Toast.LENGTH_SHORT).show();
             startActivity(intent);
         }
 
