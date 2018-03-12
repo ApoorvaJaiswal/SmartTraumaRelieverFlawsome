@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.solved_crime:
-                intent = new Intent(MainActivity.this,DisplayCrimesActivity.class);
+                intent = new Intent(MainActivity.this,SolvedCrimesActivity.class);
                 startActivity(intent);
                 break;
         }
