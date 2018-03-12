@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:background="#e0e000"
     android:layout_height="match_parent"
+    android:padding="10dp"
     tools:context="com.example.jaisa.smarttraumareliever_flawsome.CrimeDetailsActivity">
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,18 +21,21 @@
         android:layout_height="55sp"
         android:layout_marginBottom="10dp"
         android:text="The given incident description falls under the following Laws:"
-        android:textColor="#000000"/>
+        android:textColor="#000000"
+        />
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="400sp"
-        android:id="@+id/laws_view">
+        android:layout_height="300sp"
+        android:id="@+id/laws_view"
+        >
 
     </android.support.v7.widget.RecyclerView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:gravity="center">
+        android:gravity="center"
+        >
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_marginRight="90dp"
@@ -73,7 +77,8 @@
         android:layout_gravity="center"
         android:id="@+id/additionalCommentsView"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
         <EditText
             android:layout_width="300dp"
             android:id="@+id/additionalCommentsEditText"

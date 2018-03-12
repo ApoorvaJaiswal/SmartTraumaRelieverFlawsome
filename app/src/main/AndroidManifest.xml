@@ -15,24 +15,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LoginPageActivity">
+
+        </activity>
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".ReportCrimeActivity" />
         <activity
             android:name=".DisplayCrimesActivity"
             android:label="@string/title_activity_display_crimes"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".CrimeDetailsActivity">
-
-        </activity>
-        <activity android:name=".FIRReportActivity"></activity>
-        <activity android:name=".SolvedCrimesActivity"/>
+        <activity android:name=".CrimeDetailsActivity"></activity>
+        <activity android:name=".FIRReportActivity" />
+        <activity android:name=".SolvedCrimesActivity" />
+        <activity android:name=".NoResultsActivity"></activity>
     </application>
 
 </manifest>
