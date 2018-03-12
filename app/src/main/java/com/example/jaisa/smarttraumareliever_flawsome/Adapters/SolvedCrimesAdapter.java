@@ -45,8 +45,7 @@ public class SolvedCrimesAdapter extends RecyclerView.Adapter<SolvedCrimesAdapte
 
     @Override
     public int getItemCount() {
-        //return mComplaintDetails.size() ;
-        return 3;
+        return mComplaintDetails.size() ;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

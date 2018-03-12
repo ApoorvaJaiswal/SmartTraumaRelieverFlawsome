@@ -50,4 +50,8 @@ public class DBHelper {
         myRef.child("users").child(uid).child("crimes").child(crimeId+"").child("solvedDetails").child("solved").setValue(solved);
         myRef.child("users").child(uid).child("crimes").child(crimeId+"").child("solvedDetails").child("solvedTimestamp").setValue(t);
     }
+
+    public static void getAllCrimes(){
+
+    }
 }
