@@ -2,40 +2,52 @@ package com.example.jaisa.smarttraumareliever_flawsome;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
-import com.example.jaisa.smarttraumareliever_flawsome.Adapters.LawsAdapter;
-import com.example.jaisa.smarttraumareliever_flawsome.Adapters.SolvedCrimesAdapter;
-import com.example.jaisa.smarttraumareliever_flawsome.Beans.Complaint;
-
-import java.util.ArrayList;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class SolvedCrimesActivity extends AppCompatActivity {
-
-    private RecyclerView mSolvedView;
-    private RecyclerView.Adapter mSolvedAdapter;
-    private RecyclerView.LayoutManager mSolvedLayoutManager;
-    private ArrayList<Complaint> mSolvedList;
-
+DatabaseReference reference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solved_crimes);
+        reference = FirebaseDatabase.getInstance().getReference();
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot: dataSnapshot.child("users").getChildren()) {
+                    String id = postSnapshot.getKey();
+                    for(DataSnapshot crimeSnap :postSnapshot.child(id).child("crimes").getChildren())
+                    {
+                        String crimeID= crimeSnap.getKey();
 
-        getSupportActionBar().setTitle("Solved Crimes");
+                        String desc= crimeSnap.child(crimeID).child("description").getValue(String.class);
+                        String reportedTo= crimeSnap.child(crimeID).child("reportedTo").getValue(String.class);
+                        Boolean solved = crimeSnap.child(crimeID).child("solvedDetails").child("solved").getValue(Boolean.class);
+                        String solvedTime = crimeSnap.child(crimeID).child("solvedDetails").child("solvedTimestamp").getValue(String.class);
+                        int date = crimeSnap.child(crimeID).child("reportedTimestamp").child("date").getValue(Integer.class);
+                        int month = crimeSnap.child(crimeID).child("reportedTimestamp").child("month").getValue(Integer.class);
+                        int hour = crimeSnap.child(crimeID).child("reportedTimestamp").child("hours").getValue(Integer.class);
+                        int minute = crimeSnap.child(crimeID).child("reportedTimestamp").child("minutes").getValue(Integer.class);
+                        int sec = crimeSnap.child(crimeID).child("reportedTimestamp").child("seconds").getValue(Integer.class);
+                        String d = hour+":"+minute+":"+sec+" , "+date+"/"+(month+1);
 
-        mSolvedView = (RecyclerView) findViewById(R.id.solved_view);
-        mSolvedView.setHasFixedSize(true);
-        mSolvedLayoutManager = new LinearLayoutManager(this);
-        mSolvedView.setLayoutManager(mSolvedLayoutManager);
 
-        mSolvedList = new ArrayList<>();
-        mSolvedList.add(new Complaint("Acid", "User's desc", "11/03/2018", "23:27", "Karnataka Police"));
-        mSolvedList.add(new Complaint("Napthalene", "User's desc", "17/01/2018", "03:27", "Kerala Police"));
-        mSolvedList.add(new Complaint("Murder", "User's desc", "02/09/2018", "20:20", "Andhra Police"));
 
-        mSolvedAdapter =  new SolvedCrimesAdapter(mSolvedList);
-        mSolvedView.setAdapter(mSolvedAdapter);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
-}
+    }
+

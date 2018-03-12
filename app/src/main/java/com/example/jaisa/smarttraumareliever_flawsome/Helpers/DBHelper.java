@@ -38,20 +38,22 @@ public class DBHelper {
     }
     public static void addCrime(String uid,String desc,String reportedTo)
     {
+        initialize();
         int crimeId = generatedCrimeId();
         Timestamp t= new Timestamp(System.currentTimeMillis());
+        Boolean val =false;
         myRef.child("users").child(uid).child("crimes").child(crimeId+"").child("reportedTimestamp").setValue(t);
         myRef.child("users").child(uid).child("crimes").child(crimeId+"").child("description").setValue(desc);
         myRef.child("users").child(uid).child("crimes").child(crimeId+"").child("reportedTo").setValue(reportedTo);
+        myRef.child("users").child(uid).child("crimes").child(crimeId+"").child("solvedDetails").child("solved").setValue(val);
+
     }
     public static void addSolvedDetails(Boolean solved,String crimeId,String uid)
     {
+        initialize();
         Timestamp t= new Timestamp(System.currentTimeMillis());
         myRef.child("users").child(uid).child("crimes").child(crimeId+"").child("solvedDetails").child("solved").setValue(solved);
         myRef.child("users").child(uid).child("crimes").child(crimeId+"").child("solvedDetails").child("solvedTimestamp").setValue(t);
     }
 
-    public static void getAllCrimes(){
-
-    }
 }
