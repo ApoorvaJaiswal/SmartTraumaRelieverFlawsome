@@ -127,7 +127,11 @@ public class CrimeDetailsActivity extends AppCompatActivity {
                 Bundle b=new Bundle();
                 b.putStringArrayList("laws", mLawNames);
                 b.putStringArrayList("descriptions", mLawDescriptions);
-                b.putString("comments", additionalCommentsEditText.getText().toString());
+                String s = additionalCommentsEditText.getText().toString();
+                if(s.isEmpty())
+                b.putString("comments","none" );
+                else
+                    b.putString("comments",s);
                 b.putString("incident", incident);
                 intent.putExtras(b);
                 startActivity(intent);
@@ -144,6 +148,6 @@ public class CrimeDetailsActivity extends AppCompatActivity {
         for(int i=0; i<mLawNames.size(); i++){
             display = display+"\n"+mLawNames.get(i)+":"+mLawDescriptions.get(i);
         }*/
-        Toast.makeText(CrimeDetailsActivity.this, mLawDescriptions.get(1), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(CrimeDetailsActivity.this, mLawDescriptions.get(1), Toast.LENGTH_SHORT).show();
     }
 }
