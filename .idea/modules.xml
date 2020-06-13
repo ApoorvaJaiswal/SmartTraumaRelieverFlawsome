@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Code-SmartTraumaRelieverFlawsome.iml" filepath="$PROJECT_DIR$/.idea/modules/Code-SmartTraumaRelieverFlawsome.iml" group="SmartTraumaRelieverFlawsome" />
       <module fileurl="file://$PROJECT_DIR$/SmartTraumaRelieverFlawsome.iml" filepath="$PROJECT_DIR$/SmartTraumaRelieverFlawsome.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SmartTraumaRelieverFlawsome-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SmartTraumaRelieverFlawsome-app.iml" group="SmartTraumaRelieverFlawsome/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

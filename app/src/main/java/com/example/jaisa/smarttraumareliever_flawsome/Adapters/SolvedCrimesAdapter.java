@@ -1,17 +1,13 @@
 package com.example.jaisa.smarttraumareliever_flawsome.Adapters;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.jaisa.smarttraumareliever_flawsome.Beans.Complaint;
 import com.example.jaisa.smarttraumareliever_flawsome.R;
-import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 

@@ -1,18 +1,16 @@
 package com.example.jaisa.smarttraumareliever_flawsome.Adapters;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.example.jaisa.smarttraumareliever_flawsome.R;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Varsha on 11-03-2018.
